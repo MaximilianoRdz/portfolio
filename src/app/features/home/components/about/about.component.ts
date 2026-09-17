@@ -104,7 +104,7 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
 
   private iniciarContadores() {
     this.animarNumero(0, 2, 800, (v) => this.expYears.set(v));
-    this.animarNumero(0, 0, 1200, (v) => this.projectCount.set(v));
+    this.animarNumero(0, 1, 800, (v) => this.projectCount.set(v));
     this.animarNumero(0, 100, 1500, (v) => this.cleanCodeRate.set(v));
   }
 
@@ -117,6 +117,8 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
       callback(value);
       if (progress < 1) {
         requestAnimationFrame(step);
+      } else {
+        callback(end);
       }
     };
     requestAnimationFrame(step);
