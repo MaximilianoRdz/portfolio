@@ -178,6 +178,7 @@ body {
 .glitch-wrapper {
   position: relative;
   display: inline-block;
+  will-change: transform, opacity;
 }
 
 /* Continuous Loop Glitch (Used for Name Title) */
@@ -237,6 +238,7 @@ a:hover .glitch::after {
   pointer-events: none;
   clip-path: inset(100% 0 0 0);
   opacity: 0;
+  will-change: transform, clip-path, opacity;
 }
 
 .glitch::before {
