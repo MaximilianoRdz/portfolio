@@ -7,7 +7,8 @@ export const PROJECTS: Project[] = [
     description: 'Sistema de pagos y gestión financiera para empresas.',
     stack: ['Angular', 'TypeScript', 'Python', 'Django REST', 'PostgreSQL'],
     featured: true,
-    codeUrl: '#',
+    codeUrl: 'https://github.com/MaximilianoRdz/GTOPagos',
+    backendCodeUrl: 'https://github.com/MaximilianoRdz/GTOPagos_Back',
     demoUrl: '#'
   },
 ];

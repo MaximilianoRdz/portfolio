@@ -6,6 +6,7 @@ export interface Project {
   stack: string[];
   demoUrl?: string;
   codeUrl?: string;
+  backendCodeUrl?: string;
   imageUrl?: string;
   featured: boolean;
 }

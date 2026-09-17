@@ -60,13 +60,33 @@ import { PROJECTS } from '../../../../shared/data/projects';
               </span>
             </div>
 
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-neon-red/30 text-xs">
-              <a [href]="project.demoUrl" target="_blank" class="flex items-center gap-1.5 font-bold text-cyber-yellow hover:text-white uppercase tracking-widest transition-colors font-tech">
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-neon-red/30 text-xs flex-wrap gap-2">
+              <a [href]="project.demoUrl" target="_blank" rel="noopener noreferrer" 
+                 class="flex items-center gap-1.5 font-bold text-cyber-yellow hover:text-white uppercase tracking-widest transition-colors font-tech"
+                 [class.opacity-50]="project.demoUrl === '#'">
                 [ DEMO ] <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               </a>
-              <a [href]="project.codeUrl" target="_blank" class="flex items-center gap-1.5 font-bold text-neon-cyan hover:text-white uppercase tracking-widest transition-colors font-tech">
-                [ CÓDIGO ] <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-              </a>
+              
+              <div class="flex items-center gap-2 sm:gap-3 ml-auto flex-wrap">
+                <ng-container *ngIf="project.backendCodeUrl; else singleCode">
+                  <a [href]="project.codeUrl" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center gap-1 font-bold text-neon-cyan hover:text-white uppercase tracking-wider transition-colors font-tech" 
+                     title="GitHub Frontend: GTOPagos">
+                    [ FRONTEND ] <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  </a>
+                  <a [href]="project.backendCodeUrl" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center gap-1 font-bold text-neon-cyan hover:text-white uppercase tracking-wider transition-colors font-tech" 
+                     title="GitHub Backend: GTOPagos_Back">
+                    [ BACKEND ] <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  </a>
+                </ng-container>
+                <ng-template #singleCode>
+                  <a *ngIf="project.codeUrl" [href]="project.codeUrl" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center gap-1.5 font-bold text-neon-cyan hover:text-white uppercase tracking-widest transition-colors font-tech">
+                    [ CÓDIGO ] <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  </a>
+                </ng-template>
+              </div>
             </div>
           </div>
         </div>
