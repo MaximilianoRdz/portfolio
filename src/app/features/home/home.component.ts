@@ -98,8 +98,10 @@ import { TechStackComponent } from './components/tech-stack/tech-stack.component
         <div class="absolute inset-0 bg-[linear-gradient(rgba(255,0,60,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,60,0.05)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none"></div>
         
         <div class="max-w-5xl mx-auto text-center relative z-10">
-          <h2 class="text-3xl md:text-5xl font-bold mb-4 uppercase tracking-wider text-white">
-            <span class="text-neon-red mr-2">[</span> Iniciar Conexión <span class="text-neon-red ml-2">]</span>
+          <h2 class="text-xl sm:text-3xl md:text-5xl font-bold mb-4 uppercase tracking-wider text-white">
+            <span class="inline-block whitespace-nowrap">
+              <span class="text-neon-red mr-1.5 sm:mr-2">[</span>Iniciar Conexión<span class="text-neon-red ml-1.5 sm:ml-2">]</span>
+            </span>
           </h2>
           <p class="text-white/70 mb-10 max-w-xl mx-auto font-tech text-sm md:text-base leading-relaxed">
             >_ SISTEMA ABIERTO A NUEVAS OPORTUNIDADES Y COLABORACIONES PROFESIONALES. ESTABLEZCA CONTACTO DIRECTO.

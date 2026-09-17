@@ -8,12 +8,13 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section id="about" class="py-24 px-4 md:px-8 max-w-5xl mx-auto">
-      <div class="flex items-center gap-3 sm:gap-4 mb-10 md:mb-12 justify-center text-center">
-        <div class="h-px w-8 sm:w-16 bg-neon-red/60"></div>
-        <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wider text-white text-center">
-          Sobre <span class="text-cyber-yellow">[ Mí ]</span>
+      <div class="flex items-center justify-center gap-3 sm:gap-4 mb-10 md:mb-12 text-center">
+        <div class="h-px w-8 sm:w-16 bg-neon-red/60 hidden sm:block"></div>
+        <h2 class="text-xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wider text-white text-center">
+          <span class="inline-block">Sobre</span>
+          <span class="text-cyber-yellow inline-block whitespace-nowrap ml-1 sm:ml-2">[&nbsp;Mí&nbsp;]</span>
         </h2>
-        <div class="h-px w-8 sm:w-16 bg-neon-red/60"></div>
+        <div class="h-px w-8 sm:w-16 bg-neon-red/60 hidden sm:block"></div>
       </div>
 
       <div class="flex flex-col gap-8">

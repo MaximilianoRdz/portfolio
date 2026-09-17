@@ -14,12 +14,13 @@ import { TECH_STACK } from '../../../../shared/data/tech-stack';
       
       <div class="max-w-6xl mx-auto relative">
         
-        <div class="flex items-center gap-3 sm:gap-4 mb-12 md:mb-16 justify-center text-center">
-          <div class="h-px w-8 sm:w-16 bg-neon-cyan/60"></div>
-          <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wider text-white text-center">
-            Escaneo: <span class="text-neon-cyan drop-shadow-[0_0_10px_rgba(0,255,255,0.4)]">[ HABILIDADES ]</span>
+        <div class="flex items-center justify-center gap-3 sm:gap-4 mb-10 md:mb-16 text-center">
+          <div class="h-px w-8 sm:w-16 bg-neon-cyan/60 hidden sm:block"></div>
+          <h2 class="text-xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wider text-white text-center">
+            <span class="inline-block">Escaneo:</span>
+            <span class="text-neon-cyan drop-shadow-[0_0_10px_rgba(0,255,255,0.4)] inline-block whitespace-nowrap ml-1 sm:ml-2">[&nbsp;HABILIDADES&nbsp;]</span>
           </h2>
-          <div class="h-px w-8 sm:w-16 bg-neon-cyan/60"></div>
+          <div class="h-px w-8 sm:w-16 bg-neon-cyan/60 hidden sm:block"></div>
         </div>
         
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">

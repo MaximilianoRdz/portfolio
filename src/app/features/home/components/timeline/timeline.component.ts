@@ -11,12 +11,13 @@ import { EXPERIENCES } from '../../../../shared/data/experience';
     <section id="experience" class="py-24 px-4">
       <div class="max-w-4xl mx-auto">
         
-        <div class="flex items-center gap-3 sm:gap-4 mb-12 md:mb-16 justify-center text-center">
-          <div class="h-px w-8 sm:w-16 bg-cyber-yellow"></div>
-          <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wider text-white text-center">
-            Trayectoria <span class="text-cyber-yellow drop-shadow-[0_0_10px_rgba(252,238,10,0.4)]">Profesional</span>
+        <div class="flex items-center justify-center gap-3 sm:gap-4 mb-10 md:mb-16 text-center">
+          <div class="h-px w-8 sm:w-16 bg-cyber-yellow hidden sm:block"></div>
+          <h2 class="text-xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wider text-white text-center">
+            <span class="inline-block">Trayectoria</span>
+            <span class="text-cyber-yellow drop-shadow-[0_0_10px_rgba(252,238,10,0.4)] inline-block whitespace-nowrap ml-1 sm:ml-2">Profesional</span>
           </h2>
-          <div class="h-px w-8 sm:w-16 bg-cyber-yellow"></div>
+          <div class="h-px w-8 sm:w-16 bg-cyber-yellow hidden sm:block"></div>
         </div>
         
         <div class="relative pl-6 sm:pl-8 md:pl-12">

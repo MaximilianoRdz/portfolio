@@ -9,12 +9,13 @@ import { PROJECTS } from '../../../../shared/data/projects';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section id="projects" class="py-24 px-4 md:px-8 max-w-7xl mx-auto">
-      <div class="flex items-center gap-3 sm:gap-4 mb-12 md:mb-16 justify-center text-center">
-        <div class="h-px w-8 sm:w-16 bg-neon-cyan/60"></div>
-        <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wider text-white text-center">
-          Base de Datos: <span class="text-neon-cyan drop-shadow-[0_0_10px_rgba(0,255,255,0.4)]">[ PROYECTOS ]</span>
+      <div class="flex items-center justify-center gap-3 sm:gap-4 mb-10 md:mb-16 text-center">
+        <div class="h-px w-8 sm:w-16 bg-neon-cyan/60 hidden sm:block"></div>
+        <h2 class="text-xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wider text-white text-center">
+          <span class="inline-block">Base de Datos:</span>
+          <span class="text-neon-cyan drop-shadow-[0_0_10px_rgba(0,255,255,0.4)] inline-block whitespace-nowrap ml-1 sm:ml-2">[&nbsp;PROYECTOS&nbsp;]</span>
         </h2>
-        <div class="h-px w-8 sm:w-16 bg-neon-cyan/60"></div>
+        <div class="h-px w-8 sm:w-16 bg-neon-cyan/60 hidden sm:block"></div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
