@@ -9,6 +9,6 @@ export const PROJECTS: Project[] = [
     featured: true,
     codeUrl: 'https://github.com/MaximilianoRdz/GTOPagos',
     backendCodeUrl: 'https://github.com/MaximilianoRdz/GTOPagos_Back',
-    demoUrl: '#'
+    demoUrl: 'https://gtopagos.maxrdzs.com/demo'
   },
 ];
