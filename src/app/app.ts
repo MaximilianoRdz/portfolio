@@ -1,13 +1,11 @@
-import { Component, signal } from '@angular/core';
-import { LucideAngularModule } from 'lucide-angular';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { HomeComponent } from './features/home/home.component';
 
 @Component({
   selector: 'app-root',
-  imports: [LucideAngularModule, HomeComponent],
+  standalone: true,
+  imports: [HomeComponent],
   template: `<app-home></app-home>`,
-  styleUrl: './app.css'
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class App {
-  protected readonly title = signal('myportfolio');
-}
+export class App {}

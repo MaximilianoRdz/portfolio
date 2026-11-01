@@ -1,4 +1,4 @@
-import { Component, signal, HostListener, Inject, PLATFORM_ID, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, Inject, PLATFORM_ID, AfterViewInit, OnDestroy, ChangeDetectionStrategy, NgZone } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { debounceTime, fromEvent, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
@@ -83,17 +83,23 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
   private readonly OFFSET = 50;
   private destroy$ = new Subject<void>();
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private ngZone: NgZone
+  ) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.actualizarSeccionActiva();
-      fromEvent(window, 'scroll')
-        .pipe(
-          debounceTime(50),
-          takeUntil(this.destroy$)
-        )
-        .subscribe(() => this.actualizarSeccionActiva());
+
+      this.ngZone.runOutsideAngular(() => {
+        fromEvent(window, 'scroll', { passive: true })
+          .pipe(
+            debounceTime(50),
+            takeUntil(this.destroy$)
+          )
+          .subscribe(() => this.actualizarSeccionActiva());
+      });
     }
   }
 
@@ -128,7 +134,9 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
       }
     }
 
-    this.activeSection.set(seccionActual);
+    if (this.activeSection() !== seccionActual) {
+      this.activeSection.set(seccionActual);
+    }
   }
 
   scrollTo(event: Event, id: string) {

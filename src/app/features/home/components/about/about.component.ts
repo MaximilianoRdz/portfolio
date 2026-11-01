@@ -86,19 +86,23 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              this.iniciarContadores();
-              this.observer?.disconnect();
-            }
-          });
-        },
-        { threshold: 0.3 }
-      );
+      if (typeof IntersectionObserver !== 'undefined') {
+        this.observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                this.iniciarContadores();
+                this.observer?.disconnect();
+              }
+            });
+          },
+          { threshold: 0.3 }
+        );
 
-      this.observer.observe(this.el.nativeElement);
+        this.observer.observe(this.el.nativeElement);
+      } else {
+        this.iniciarContadores();
+      }
     }
   }
 

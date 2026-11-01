@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, signal } from '@angular/core';
+import { Component, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, signal, ChangeDetectionStrategy, NgZone } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
@@ -11,6 +11,7 @@ import { TechStackComponent } from './components/tech-stack/tech-stack.component
 @Component({
   selector: 'app-home',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule, 
     NavbarComponent, 
@@ -75,10 +76,10 @@ import { TechStackComponent } from './components/tech-stack/tech-stack.component
 
       <!-- Social Links Top Right -->
       <div class="fixed top-4 right-4 z-50 flex flex-col items-end gap-3 pointer-events-none">
-        <a href="http://www.linkedin.com/in/maximiliano-rodríguez-991430245" target="_blank" aria-label="LinkedIn" class="pointer-events-auto p-2.5 cyber-card !border-neon-cyan/50 text-neon-cyan hover:!border-cyber-yellow hover:text-cyber-yellow transition-colors flex items-center justify-center">
+        <a href="http://www.linkedin.com/in/maximiliano-rodríguez-991430245" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="pointer-events-auto p-2.5 cyber-card !border-neon-cyan/50 text-neon-cyan hover:!border-cyber-yellow hover:text-cyber-yellow transition-colors flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
         </a>
-        <a href="https://github.com/MaximilianoRdz" target="_blank" aria-label="GitHub" class="pointer-events-auto p-2.5 cyber-card !border-neon-cyan/50 text-neon-cyan hover:!border-cyber-yellow hover:text-cyber-yellow transition-colors flex items-center justify-center">
+        <a href="https://github.com/MaximilianoRdz" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="pointer-events-auto p-2.5 cyber-card !border-neon-cyan/50 text-neon-cyan hover:!border-cyber-yellow hover:text-cyber-yellow transition-colors flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
         </a>
       </div>
@@ -127,29 +128,39 @@ import { TechStackComponent } from './components/tech-stack/tech-stack.component
 export class HomeComponent implements AfterViewInit, OnDestroy {
   scrollProgress = signal(0);
   private destroy$ = new Subject<void>();
+  private ticking = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private ngZone: NgZone
+  ) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.actualizarProgresoScroll();
 
-      fromEvent(window, 'scroll')
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => this.actualizarProgresoScroll());
+      this.ngZone.runOutsideAngular(() => {
+        fromEvent(window, 'scroll', { passive: true })
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => this.actualizarProgresoScroll());
+      });
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('active');
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
+      if (typeof IntersectionObserver !== 'undefined') {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
 
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      } else {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+      }
     }
   }
 
@@ -160,10 +171,19 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   private actualizarProgresoScroll() {
     if (!isPlatformBrowser(this.platformId)) return;
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    this.scrollProgress.set(Math.min(100, Math.max(0, Math.round(progress))));
+    if (!this.ticking) {
+      window.requestAnimationFrame(() => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        const rounded = Math.min(100, Math.max(0, Math.round(progress)));
+        if (this.scrollProgress() !== rounded) {
+          this.scrollProgress.set(rounded);
+        }
+        this.ticking = false;
+      });
+      this.ticking = true;
+    }
   }
 
   ngOnDestroy() {
